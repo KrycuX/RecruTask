@@ -1,0 +1,139 @@
+﻿@page "/userSelector"
+@using RecruTask.Data
+<PageTitle>Użytkownicy</PageTitle>
+
+<MudDropContainer T="User" Items="users" ItemsSelector="ItemSelector" ItemDropped="ItemUpdated" Class="d-flex h-100">
+    <ChildContent>
+        <MudContainer Class="pa-6 rounded-3 w-25 h-100 bg-opacity-25 bg-white shadow ">
+            <MudText Typo="Typo.h6" Class="mb-4">Użytkownicy</MudText>
+            <MudDropZone T="User" Identifier="Empty" Class=" w-100 h-75 d-flex col-2 bg-black">
+               
+            </MudDropZone>
+       
+            <MudList Class="h-25 overflow-auto" >
+                @foreach(var message in messages)
+                {
+                    <MudListItem Icon="@message.icon" Text="@message.message"  />
+                }
+              
+            </MudList>
+        </MudContainer>
+        
+        <MudContainer Class="  rounded-3 bg-opacity-25 bg-white w-75 shadow">
+            <MudDivider DividerType="DividerType.FullWidth" />
+            <MudTabs Elevation="25" Rounded="true" ApplyEffectsToContainer="false" PanelClass=" w-100 h-100" >
+                @foreach (var item in groups)
+                {
+                    <MudTabPanel Text="@item.Name" Icon="@item.Icon" Class="d-flex w-100 h-100 text-black">
+                        <MudDropZone T="User" Identifier="@item.Id.ToString()" Class="rounded-3 mt-6 white d-flex w-100 h-100">
+                            <MudText Typo="Typo.h6" Class="mb-4">@item.Name</MudText>
+                            </MudDropZone>
+                        </MudTabPanel>
+                }
+            </MudTabs>
+        </MudContainer>
+       
+       
+    </ChildContent>
+    <ItemRenderer>
+        <MudPaper Elevation="25" Class="pa-4 ma-5">
+           <MudIcon Class="d-flex me-0" Color="Color.Tertiary" Icon="@(context.group?.Icon ?? Icons.Material.Filled.Circle)">
+                
+            </MudIcon>
+            <MudImage Class="bg-white" Src="D:\Projekty\RecruTask\RecruTask\Images\portrait08.jpg"></MudImage>
+
+            @context.Name @context.Surname
+          
+        </MudPaper>
+       
+        </ItemRenderer>
+    </MudDropContainer>
+
+@code {
+    private void ItemUpdated(MudItemDropInfo<User> dropItem)
+    {
+        if (dropItem.DropzoneIdentifier.Equals("Empty"))
+        {
+            messages.Add((dropItem.Item.group.Icon, $"{dropItem.Item.Name} został usunięty z grupy {dropItem.Item.group.Name}"));
+            dropItem.Item.group = null;
+            users.FirstOrDefault(x => x.Id == dropItem.Item.Id).group = null;
+        }
+        else
+        {
+            dropItem.Item.group = groups.FirstOrDefault(x => x.Id == Convert.ToInt32(dropItem.DropzoneIdentifier));
+            users.FirstOrDefault(x => x.Id == dropItem.Item.Id).group = groups.FirstOrDefault(x => x.Id == Convert.ToInt32(dropItem.DropzoneIdentifier));
+            messages.Add((dropItem.Item.group.Icon, $"{dropItem.Item.Name} został dodany do grupy {dropItem.Item.group.Name}"));
+        }
+
+    }
+    private bool ItemSelector(User item,string dropzone)
+    {
+        if(dropzone.Equals("Empty") && item.group == null)
+            return true;  
+        if (item.group != null && !dropzone.Equals("Empty"))
+        {
+            if (item.group.Id == Convert.ToInt32(dropzone))
+                return true;
+            else
+                return false;
+        }
+        return false;
+    }
+    List<User> users = new()
+    {
+        new()
+        {
+            Id=1,
+            Name="Tomasz",
+            Surname="Krynicki"
+        },
+           new()
+        {
+            Id=2,
+            Name="Karol",
+            Surname="Krynicki"
+        },
+           new()
+        {
+            Id=3,
+            Name="Bartek",
+            Surname="Krynicki"
+        },
+            new()
+        {
+            Id=4,
+            Name="Yolo",
+            Surname="Krynicki"
+        },
+    };
+    public List<Group> groups = new()
+    {
+        new()
+        {
+            Id=1,
+            Name="Grupa1",
+            Icon= Icons.Material.Filled.StarBorder
+
+        },
+           new()
+        {
+            Id=2,
+            Name="Grupa2",
+              Icon= Icons.Material.Filled.SmartToy
+
+        },
+           new()
+        {
+            Id=3,
+            Name="Grupa3",
+             Icon= Icons.Material.Filled.Cable
+        },
+    };
+    List<(string icon,string message)> messages = new();
+    private int currentCount = 0;
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+}
