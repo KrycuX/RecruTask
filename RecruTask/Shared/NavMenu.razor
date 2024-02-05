@@ -1,8 +1,10 @@
-﻿<MudNavMenu>
-    <MudButton Href="/counter"></MudButton>
-    <MudNavLink Class="bg-white"  Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home" IconColor="Color.Default"></MudNavLink>
-    <MudNavLink Class="bg-white d-flex" Href="userSelector" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.StarBorder" IconColor="Color.Default"> Zakładka 1</MudNavLink>
-    <MudNavLink Class="bg-white" Href="weather" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.List" IconColor="Color.Default" >Zakładka 2</MudNavLink>
+﻿<MudNavMenu Class="d-block w-100">
+    <MudNavLink Class="rounded-3 bg-white ma-2" Style="width:auto; display:grid" Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Computer" IconColor="Color.Default" >
+        <MudItem Class="text-black">test</MudItem>
+    </MudNavLink>
+    <MudNavLink Class="rounded-3 bg-white ma-2 " Style="width:auto; display:grid" Href="userSelector" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.StarBorder" IconColor="Color.Default">
+        <MudItem Class="text-black">test</MudItem></MudNavLink>
+    <MudNavLink Class="rounded-3  d-block ma-2" Style="width:auto; display:flex" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.StarBorder" IconColor="Color.Inherit" Disabled=true></MudNavLink>
 
 </MudNavMenu>
 

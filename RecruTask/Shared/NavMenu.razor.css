@@ -1,4 +1,4 @@
-.nav-item{
+
+::deep .custom-nav{
     background-color:white;
 }
-.nav-item::after ho
