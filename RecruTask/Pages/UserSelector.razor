@@ -4,29 +4,28 @@
 
 <MudDropContainer T="User" Items="users" ItemsSelector="ItemSelector" ItemDropped="ItemUpdated" Class="d-flex h-100">
     <ChildContent>
-        <MudContainer Class="pa-6 rounded-3 w-25 h-100 bg-opacity-25 bg-white shadow ">
+        <MudContainer Class="pa-6 rounded-3 bg-opacity-25 bg-white shadow m-3" Style="width:45%">
             <MudText Typo="Typo.h6" Class="mb-4">Użytkownicy</MudText>
-            <MudDropZone T="User" Identifier="Empty" Class=" w-100 h-75 d-flex flex-wrap flex-grow-1">
+            <MudDropZone T="User" Identifier="Empty" Class=" w-100 d-flex flex-wrap flex-grow-1" Style="height:60%" >
                
             </MudDropZone>
             <MudDivider DividerType="DividerType.FullWidth" />
-            <MudList Class="h-25 overflow-auto" >
+            <MudList Class=" overflow-auto mb-4" Style="height:35%">
                 @foreach(var message in messages.Reverse<(string icon,string message)>())
                 {
-                    <MudListItem Icon="@message.icon" Text="@message.message"  />
+                    <MudListItem  Class="bg-white bg-opacity-50 mb-2 " Style="border-radius:20px; " Icon="@message.icon" Text="@message.message"/>
+                    
                 }
             </MudList>
         </MudContainer>
         
-        <MudContainer Class=" w-75 h-100 rounded-3 bg-opacity-25 bg-white shadow mb-5">
-         
-            <MudTabs Elevation="25"  PanelClass=" d-flex h-100 w-100 " >
+        <MudContainer Class=" w-75  rounded-3 bg-opacity-25 bg-white shadow m-3" Style="width:55%">
+            <MudTabs Rounded=true Elevation="25" PanelClass="flex-grow-1" Style="height:95%">
                 @foreach (var item in groups)
                 {
-                    <MudTabPanel Text="@item.Name" Icon="@item.Icon" Class="rounded-3 d-flex w-100 h-100 text-black">
-                        <MudDropZone T="User" Identifier="@item.Id.ToString()" Class="mt-6 w-100 h-100 d-flex flex-wrap flex-grow-1 bg-white " >
-                  
-                            </MudDropZone>
+                    <MudTabPanel Text="@item.Name" Icon="@item.Icon" Class="rounded-bottom d-flex w-100 h-100 text-black" >
+                        <MudDropZone T="User" Identifier="@item.Id.ToString()" Class="mt-6 w-100 h-100 d-flex flex-wrap flex-grow-1">
+                        </MudDropZone>
                         </MudTabPanel>
                 }
             </MudTabs>
@@ -42,17 +41,15 @@
                     <MudImage Class=" d-flex bg-white justify-center" Src="@context.Image"></MudImage>
                 </MudAvatar>
                  </MudItem>
-               
-
                 <MudItem Class="d-flex justify-center">@context.Name</MudItem>
                <MudItem Class="d-flex justify-center">@context.Surname</MudItem>
-                <MudItem Class="d-flex rounded-bottom justify-center bg-dark text-white"> <MudIcon Icon="@Icons.Material.Filled.Map"></MudIcon>@context.City</MudItem>
+                <MudItem Class="d-flex rounded-bottom justify-center bg-dark text-white"> <MudIcon Icon="@Icons.Material.Filled.LocationOn" Class="me-1"></MudIcon>@context.City</MudItem>
         </MudPaper>
        
         </ItemRenderer>
     </MudDropContainer>
 
-@code {
+    @code {
     private void ItemUpdated(MudItemDropInfo<User> dropItem)
     {
         if (dropItem.Item == null)
@@ -68,9 +65,15 @@
         }
         else
         {
+            if (dropItem.Item.group!= null)
+            {
+                if (dropItem.Item.group.Id == Convert.ToInt32(dropItem.DropzoneIdentifier))
+                    return;
+            }
+
             dropItem.Item.group = groups.FirstOrDefault(x => x.Id == Convert.ToInt32(dropItem.DropzoneIdentifier));
             users.FirstOrDefault(x => x.Id == dropItem.Item.Id).group = groups.FirstOrDefault(x => x.Id == Convert.ToInt32(dropItem.DropzoneIdentifier));
-            messages.Add((dropItem.Item.group.Icon, $"{dropItem.Item.Name} został dodany do grupy {dropItem.Item.group.Name}"));
+            messages.Add((dropItem.Item.group.Icon, $"{dropItem.Item.Name} został przeniesiony do grupy {dropItem.Item.group.Name}"));
         }
 
     }
@@ -87,6 +90,7 @@
         }
         return false;
     }
+   
     List<User> users = new()
     {
         new()
@@ -158,10 +162,5 @@
         },
     };
     List<(string icon,string message)> messages = new();
-    private int currentCount = 0;
 
-    private void IncrementCount()
-    {
-        currentCount++;
-    }
 }

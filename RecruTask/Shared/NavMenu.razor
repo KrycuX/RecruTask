@@ -1,10 +1,15 @@
-﻿<MudNavMenu Class="d-block w-100">
-    <MudNavLink Class="rounded-3 bg-white ma-2" Style="width:auto; display:grid" Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Computer" IconColor="Color.Default" >
-        <MudItem Class="text-black">test</MudItem>
+﻿<MudNavMenu  Class="d-inline-block ">
+    <MudNavLink Class="rounded-3 bg-white  ma-1 mb-6 p-2" Style="width:70%; " Href="" Match="NavLinkMatch.All">
+        <MudIcon Class="justify-start text-black " Icon="@Icons.Material.Filled.Computer" Color="Color.Inherit"></MudIcon>
     </MudNavLink>
-    <MudNavLink Class="rounded-3 bg-white ma-2 " Style="width:auto; display:grid" Href="userSelector" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.StarBorder" IconColor="Color.Default">
-        <MudItem Class="text-black">test</MudItem></MudNavLink>
-    <MudNavLink Class="rounded-3  d-block ma-2" Style="width:auto; display:flex" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.StarBorder" IconColor="Color.Inherit" Disabled=true></MudNavLink>
+    <MudNavLink Class="rounded-3 bg-white  flex-wrap gap-2 ml-1 mr-1 mb-2 p-0" Style="width:70%; font-size:8px!important" Href="userSelector" Match="NavLinkMatch.Prefix">
+        <MudIcon Class="justify-center text-black" Icon="@Icons.Material.Filled.StarBorder"></MudIcon>
+        <MudItem Class="justify-center text-black">Zakładka 1</MudItem>
+        </MudNavLink>
+    <MudNavLink Class="rounded-3 flex-wrap gap-2 ml-1 mr-1 pa-0" Style="width:70%;font-size:8px!important" Match="NavLinkMatch.Prefix" Disabled=true>
+        <MudIcon Class="justify-center text-white " Icon="@Icons.Material.Filled.StarBorder"></MudIcon>
+        <MudItem Class="justify-center text-white ">Zakładka 2</MudItem>
+    </MudNavLink>
 
 </MudNavMenu>
 
