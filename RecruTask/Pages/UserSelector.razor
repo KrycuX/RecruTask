@@ -10,10 +10,10 @@
                
             </MudDropZone>
             <MudDivider DividerType="DividerType.FullWidth" />
-            <MudList Class=" overflow-auto mb-4" Style="height:35%">
+            <MudList Class=" overflow-auto mb-4 p-4" Style="height:35%">
                 @foreach(var message in messages.Reverse<(string icon,string message)>())
                 {
-                    <MudListItem  Class="bg-white bg-opacity-50 mb-2 " Style="border-radius:20px; " Icon="@message.icon" Text="@message.message"/>
+                    <MudListItem Class="bg-white bg-opacity-50 mb-2 p-2 " Style="border-radius:20px;" Icon="@message.icon" Text="@message.message" />
                     
                 }
             </MudList>
@@ -34,18 +34,18 @@
     </ChildContent>
     <ItemRenderer>
         <MudPaper MinWidth="150px" MinHeight="180px" Elevation="0" Class=" rounded-3 m-2 d-grid ">
-            <MudIcon Class="d-flex me-0 " Style="width:1rem"Icon="@(context.group?.Icon ?? Icons.Material.Outlined.Circle)">
+            <MudIcon Class="d-flex me-0 " Style="width:1rem" Icon="@(context.Group?.Icon ?? Icons.Material.Outlined.Circle)">
             </MudIcon>
-            <MudItem Class="d-flex justify-center" >
+            <MudItem Class="d-flex justify-center">
                 <MudAvatar Class="d-flex justify-center" Style="width:5rem; height:5rem">
                     <MudImage Class=" d-flex bg-white justify-center" Src="@context.Image"></MudImage>
                 </MudAvatar>
-                 </MudItem>
-                <MudItem Class="d-flex justify-center">@context.Name</MudItem>
-               <MudItem Class="d-flex justify-center">@context.Surname</MudItem>
+            </MudItem>
+            <MudItem Class="d-flex justify-center">@context.Name</MudItem>
+                <MudItem Class="d-flex justify-center">@context.Surname</MudItem>
                 <MudItem Class="d-flex rounded-bottom justify-center bg-dark text-white"> <MudIcon Icon="@Icons.Material.Filled.LocationOn" Class="me-1"></MudIcon>@context.City</MudItem>
-        </MudPaper>
-       
+            </MudPaper>
+
         </ItemRenderer>
     </MudDropContainer>
 
@@ -56,34 +56,34 @@
             return;
         if (dropItem.DropzoneIdentifier.Equals("Empty"))
         {
-            if (dropItem.Item.group == null)
+            if (dropItem.Item.Group == null)
                 return;
 
-            messages.Add((dropItem.Item.group.Icon, $"{dropItem.Item.Name} został usunięty z grupy {dropItem.Item.group.Name}"));
-            dropItem.Item.group = null;
-            users.FirstOrDefault(x => x.Id == dropItem.Item.Id).group = null;
+            messages.Add((dropItem.Item.Group.Icon, $"{dropItem.Item.Name} został usunięty z grupy {dropItem.Item.Group.Name}"));
+            dropItem.Item.Group = null;
+            users.FirstOrDefault(x => x.Id == dropItem.Item.Id).Group = null;
         }
         else
         {
-            if (dropItem.Item.group!= null)
+            if (dropItem.Item.Group!= null)
             {
-                if (dropItem.Item.group.Id == Convert.ToInt32(dropItem.DropzoneIdentifier))
+                if (dropItem.Item.Group.Id == Convert.ToInt32(dropItem.DropzoneIdentifier))
                     return;
             }
 
-            dropItem.Item.group = groups.FirstOrDefault(x => x.Id == Convert.ToInt32(dropItem.DropzoneIdentifier));
-            users.FirstOrDefault(x => x.Id == dropItem.Item.Id).group = groups.FirstOrDefault(x => x.Id == Convert.ToInt32(dropItem.DropzoneIdentifier));
-            messages.Add((dropItem.Item.group.Icon, $"{dropItem.Item.Name} został przeniesiony do grupy {dropItem.Item.group.Name}"));
+            dropItem.Item.Group = groups.FirstOrDefault(x => x.Id == Convert.ToInt32(dropItem.DropzoneIdentifier));
+            users.FirstOrDefault(x => x.Id == dropItem.Item.Id).Group = groups.FirstOrDefault(x => x.Id == Convert.ToInt32(dropItem.DropzoneIdentifier));
+            messages.Add((dropItem.Item.Group.Icon, $"{dropItem.Item.Name} został przeniesiony do grupy {dropItem.Item.Group.Name}"));
         }
 
     }
     private bool ItemSelector(User item,string dropzone)
     {
-        if(dropzone.Equals("Empty") && item.group == null)
+        if(dropzone.Equals("Empty") && item.Group == null)
             return true;  
-        if (item.group != null && !dropzone.Equals("Empty"))
+        if (item.Group != null && !dropzone.Equals("Empty"))
         {
-            if (item.group.Id == Convert.ToInt32(dropzone))
+            if (item.Group.Id == Convert.ToInt32(dropzone))
                 return true;
             else
                 return false;
@@ -91,6 +91,7 @@
         return false;
     }
    
+
     List<User> users = new()
     {
         new()

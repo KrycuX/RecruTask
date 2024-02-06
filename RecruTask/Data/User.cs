@@ -7,6 +7,6 @@ public class User
     public string Surname { get; set; } = string.Empty;
     public string City { get; set; } = string.Empty;
     public string Image { get; set; } = string.Empty;
-    public Group? group { get; set; }
+    public Group? Group { get; set; }
 
 }
