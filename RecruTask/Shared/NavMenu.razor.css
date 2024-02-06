@@ -1,4 +1,14 @@
-.nav-item{
+.nav-bar-item{
+    display:flex;
+    flex-wrap:wrap;
+    padding: 2px 2px 2px 2px;
     background-color:white;
+    margin:5px;
+    justify-content:center;
+    text-align:center;
+    font-size:10px;
+    min-height: 2.5rem;
+    border-radius:5px;
+    color:black;
 }
-.nav-item::after ho
+

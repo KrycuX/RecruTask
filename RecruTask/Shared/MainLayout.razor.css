@@ -6,6 +6,7 @@
 
 main {
     flex: 1;
+    overflow:hidden;
 }
 .sidebar {
     background-color: rgba(50,41,63,255);
@@ -52,10 +53,11 @@ main {
     }
 
     .sidebar {
-        width: 7vh;
+        width: 4%;
         height: 100vh;
         position: sticky;
         top: 0;
+        display:block;
     }
 
     .top-row {
@@ -70,5 +72,7 @@ main {
     }
     .content{
         height:100vh;
+        width:96%
     }
+    
 }
